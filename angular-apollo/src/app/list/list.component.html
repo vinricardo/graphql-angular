@@ -1,0 +1,12 @@
+<div *ngFor="let game of games | async" class="d-table-cell" style="width: 25rem !important;">
+    <div class="card mr-4">
+        <div class="card-header" style="background-color: rgb(255, 255, 255) !important;">
+         {{game.developed}}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{game.title}}</h5>
+          <p class="card-text">{{game.genre}}</p>
+          <p class="card-text">{{game.developed}}</p>
+        </div>
+    </div>
+</div>
