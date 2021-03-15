@@ -8,6 +8,27 @@
     Use of GraphQL with Node.js and Angular with Apollo</h2>
     <p style="font-size: 1.3rem;" class="text-center">Aims to show games registered in a fake database using front-end and back-end technologies</p>
 </div>
-<div class="row justify-content-center mt-5">
+
+<div class="row justify-content-center">
   <app-list></app-list>
+</div>
+
+
+<div class="row justify-content-center">
+  <div class="card text-center col-6">
+    <div class="card-header">
+      Register New Game
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" class="row justify-content-around">
+        <input class="form-control col-5 mb-3" placeholder="Type the game's title" formControlName="title"/>
+        <input class="form-control col-5 mb-3" placeholder="Type the game's genre" formControlName="genre"/>
+        <input class="form-control col-4 mb-3" placeholder="Type the game's developers" formControlName="developed"/>
+    </form>
+           <button class="btn btn-dark btn-sm" (click)="sendForm()" [disabled]="form.invalid">Register</button>
+    </div>
+    <div class="card-footer text-muted">
+      <small>Insert datas in the inputs and submit</small>
+    </div>
+  </div>
 </div>

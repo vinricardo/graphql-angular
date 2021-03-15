@@ -11,6 +11,7 @@ var schema = buildSchema(`
 
     type Mutation{
         updateGameGenre(id: Int!, genre: String!): Game
+         addGame(title: String!, genre: String!, developed: String!): Game
     }
 
     type Game {
@@ -72,11 +73,24 @@ var updateGameGenre = function({id, genre}){
     return gamesData.filter(game => game.id === id)[0];
 }
 
+var addGame = function({title, genre,developed}){
+    const id = gamesData.length+1;
+    const game = {
+        id: id,
+        title: title,
+        genre: genre,
+        developed: developed
+    }
+    gamesData.push(game)
+    return gamesData;
+}
+
 var root = {
     game: getGame,
     games: getGames,
     updateGameGenre: updateGameGenre,
-    allGames: allGames 
+    allGames: allGames,
+    addGame: addGame
 };
 
 var app = express();
