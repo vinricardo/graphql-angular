@@ -10,10 +10,12 @@ import gql from 'graphql-tag';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent  implements OnInit {
-  title = 'angular-apollo';
+  prevTitle; prevGenre; prevDeveloped;
+  added: boolean = false;
   form: FormGroup;
-
+  formUpdate: FormGroup;
 constructor(private fb: FormBuilder, private apollo: Apollo){
+ 
 
 }
   createForm(): void{
@@ -22,14 +24,21 @@ constructor(private fb: FormBuilder, private apollo: Apollo){
       genre: [null, Validators.required],
       developed: [null, Validators.required]
     })
+
+    this.formUpdate = this.fb.group({
+      id: [null, Validators.required],
+      genreUp: [null, Validators.required]
+    })
   }
 
   sendForm(): void{
      const title = this.form.get('title').value;
      const genre = this.form.get('genre').value;
      const developed = this.form.get('developed').value;
-
-     const QUERY_ADD = gql`
+    
+     this.prevTitle = title; this.prevGenre = genre; this.prevDeveloped = developed;
+    
+    const QUERY_ADD = gql`
      mutation AddGame($title: String!, $genre: String!, $developed: String!) {
       addGame(title: $title, genre: $genre, developed: $developed){
         id
@@ -48,7 +57,31 @@ constructor(private fb: FormBuilder, private apollo: Apollo){
     }
    }).subscribe();
 
+   this.added = true;
+   setTimeout( () => {this.added = false},4000);
    this.form.reset();
+  }
+
+
+  updateForm(): void{
+    const id = parseInt(this.formUpdate.get('id').value);
+    const genre = this.formUpdate.get('genreUp').value;
+
+    const QUERY_UPDATE = gql`
+    mutation updateGenre($id: Int!, $genre: String!){
+      updateGameGenre(id: $id, genre: $genre){
+        id
+        genre
+      }
+      }
+    `
+    this.apollo.mutate({
+      mutation: QUERY_UPDATE,
+      variables:{
+        id: id,
+        genre: genre
+      }
+    }).subscribe();
   }
 
   ngOnInit() : void{
