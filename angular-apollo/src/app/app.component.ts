@@ -11,7 +11,6 @@ import gql from 'graphql-tag';
 })
 export class AppComponent  implements OnInit {
   prevTitle; prevGenre; prevDeveloped;
-  added: boolean = false;
   form: FormGroup;
   formUpdate: FormGroup;
 constructor(private fb: FormBuilder, private apollo: Apollo){
@@ -57,9 +56,8 @@ constructor(private fb: FormBuilder, private apollo: Apollo){
     }
    }).subscribe();
 
-   this.added = true;
-   setTimeout( () => {this.added = false},4000);
    this.form.reset();
+   window.location.reload();
   }
 
 
@@ -82,6 +80,7 @@ constructor(private fb: FormBuilder, private apollo: Apollo){
         genre: genre
       }
     }).subscribe();
+    this.formUpdate.reset();
   }
 
   ngOnInit() : void{

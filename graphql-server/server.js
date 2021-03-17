@@ -83,8 +83,7 @@ var addGame = function({title, genre,developed}){
         developed: developed
     }
     gamesData.push(game)
-    console.log(gamesData)
-    return gamesData;
+    return gamesData.filter(game => game.title === title)[0];
 }
 
 var removeGame = function({id}){
