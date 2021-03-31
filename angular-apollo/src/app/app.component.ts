@@ -1,9 +1,7 @@
 import { AddGameGQL, UpdateGenreGQL } from './../generated/graphql';
-import { Query } from './types';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
+
 
 @Component({
   selector: 'app-root',
