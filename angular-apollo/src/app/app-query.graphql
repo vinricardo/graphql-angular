@@ -1,0 +1,33 @@
+mutation AddGame($title: String!, $genre: String!, $developed: String!) {
+  addGame(title: $title, genre: $genre, developed: $developed) {
+    id
+    title
+    genre
+    developed
+  }
+}
+
+mutation updateGenre($id: Int!, $genre: String!) {
+  updateGameGenre(id: $id, genre: $genre) {
+    id
+    genre
+  }
+}
+
+query allGames {
+  allGames {
+    id
+    title
+    genre
+    developed
+  }
+}
+
+mutation deleteGame($id: Int!) {
+  removeGame(id: $id) {
+    id
+    title
+    genre
+    developed
+  }
+}

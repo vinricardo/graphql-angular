@@ -1,3 +1,4 @@
+import { AddGameGQL, UpdateGenreGQL } from './../generated/graphql';
 import { Query } from './types';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,7 +14,7 @@ export class AppComponent  implements OnInit {
   prevTitle; prevGenre; prevDeveloped;
   form: FormGroup;
   formUpdate: FormGroup;
-constructor(private fb: FormBuilder, private apollo: Apollo){
+constructor(private fb: FormBuilder, private addGame : AddGameGQL, private updateGenreGame : UpdateGenreGQL){
  
 
 }
@@ -35,29 +36,12 @@ constructor(private fb: FormBuilder, private apollo: Apollo){
      const genre = this.form.get('genre').value;
      const developed = this.form.get('developed').value;
     
-     this.prevTitle = title; this.prevGenre = genre; this.prevDeveloped = developed;
-    
-    const QUERY_ADD = gql`
-     mutation AddGame($title: String!, $genre: String!, $developed: String!) {
-      addGame(title: $title, genre: $genre, developed: $developed){
-        id
-        title
-        genre
-        developed
-      }
-    }
-     `
-   this.apollo.mutate({
-     mutation: QUERY_ADD,
-     variables: {
-      title: title,
-      genre: genre,
-      developed: developed
-    }
-   }).subscribe();
+    this.prevTitle = title; this.prevGenre = genre; this.prevDeveloped = developed;
+   
+    this.addGame.mutate({title,genre,developed}).subscribe();
 
-   this.form.reset();
-   window.location.reload();
+    this.form.reset();
+    window.location.reload();
   }
 
 
@@ -65,22 +49,8 @@ constructor(private fb: FormBuilder, private apollo: Apollo){
     const id = parseInt(this.formUpdate.get('id').value);
     const genre = this.formUpdate.get('genreUp').value;
 
-    const QUERY_UPDATE = gql`
-    mutation updateGenre($id: Int!, $genre: String!){
-      updateGameGenre(id: $id, genre: $genre){
-        id
-        genre
-      }
-      }
-    `
-    this.apollo.mutate({
-      mutation: QUERY_UPDATE,
-      variables:{
-        id: id,
-        genre: genre
-      }
-    }).subscribe();
-    this.formUpdate.reset();
+    this.updateGenreGame.mutate({id,genre}).subscribe();
+    this.form.reset();
   }
 
   ngOnInit() : void{
