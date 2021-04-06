@@ -1,0 +1,8 @@
+query allGames {
+  allGames {
+    id
+    title
+    genre
+    developed
+  }
+}

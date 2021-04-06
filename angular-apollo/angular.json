@@ -125,5 +125,8 @@
       }
     }
   },
-  "defaultProject": "angular-apollo"
+  "defaultProject": "angular-apollo",
+  "cli": {
+    "analytics": false
+  }
 }

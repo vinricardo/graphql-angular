@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
 export type Maybe<T> = T | null;
@@ -95,17 +95,6 @@ export type UpdateGenreMutation = (
   )> }
 );
 
-export type AllGamesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllGamesQuery = (
-  { __typename?: 'Query' }
-  & { allGames?: Maybe<Array<Maybe<(
-    { __typename?: 'Game' }
-    & Pick<Game, 'id' | 'title' | 'genre' | 'developed'>
-  )>>> }
-);
-
 export type DeleteGameMutationVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -117,6 +106,17 @@ export type DeleteGameMutation = (
     { __typename?: 'Game' }
     & Pick<Game, 'id' | 'title' | 'genre' | 'developed'>
   )> }
+);
+
+export type AllGamesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllGamesQuery = (
+  { __typename?: 'Query' }
+  & { allGames?: Maybe<Array<Maybe<(
+    { __typename?: 'Game' }
+    & Pick<Game, 'id' | 'title' | 'genre' | 'developed'>
+  )>>> }
 );
 
 export const AddGameDocument = gql`
@@ -159,27 +159,6 @@ export const UpdateGenreDocument = gql`
       super(apollo);
     }
   }
-export const AllGamesDocument = gql`
-    query allGames {
-  allGames {
-    id
-    title
-    genre
-    developed
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AllGamesGQL extends Apollo.Query<AllGamesQuery, AllGamesQueryVariables> {
-    document = AllGamesDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const DeleteGameDocument = gql`
     mutation deleteGame($id: Int!) {
   removeGame(id: $id) {
@@ -196,6 +175,27 @@ export const DeleteGameDocument = gql`
   })
   export class DeleteGameGQL extends Apollo.Mutation<DeleteGameMutation, DeleteGameMutationVariables> {
     document = DeleteGameDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AllGamesDocument = gql`
+    query allGames {
+  allGames {
+    id
+    title
+    genre
+    developed
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AllGamesGQL extends Apollo.Query<AllGamesQuery, AllGamesQueryVariables> {
+    document = AllGamesDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
